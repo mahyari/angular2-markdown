@@ -11,6 +11,7 @@ import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-perl';
 import 'prismjs/components/prism-php';
 import 'prismjs/components/prism-scss';
+import { environment } from '../../environments/environment';
 
 
 
@@ -37,7 +38,7 @@ export class MarkdownComponent implements OnInit, AfterViewInit {
         private http: Http
     ) { }
     /**
-     * 
+     *
      */
     ngAfterViewInit() {
          if (!this.path) {
@@ -59,6 +60,9 @@ export class MarkdownComponent implements OnInit, AfterViewInit {
         this.mdService.getContent(this.path)
         .then(resp => {
             this.md = this.ext !== 'md' ?  '```' + this.ext + '\n' + resp.text() + '\n```' : resp.text();
+            if(!environment.production){
+              console.log(this.md);
+            }
             this.el.nativeElement.innerHTML = marked(this.prepare(this.md));
              Prism.highlightAll(false);
         })
