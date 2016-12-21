@@ -26,6 +26,7 @@ import { environment } from '../../environments/environment';
 })
 export class MarkdownComponent implements OnInit, AfterViewInit {
     @Input() path: string;
+    @Input() baseUrl: string = "";
     private md: any;
     private ext: string;
     ngOnInit() {
@@ -60,10 +61,13 @@ export class MarkdownComponent implements OnInit, AfterViewInit {
         this.mdService.getContent(this.path)
         .then(resp => {
             this.md = this.ext !== 'md' ?  '```' + this.ext + '\n' + resp.text() + '\n```' : resp.text();
-            if(!environment.production){
-              console.log(this.md);
+            let html =  marked(this.prepare(this.md));
+            if(this.baseUrl.length > 0){
+              html = html.replace(/(href=")(?!https?:\/\/)([^"]*)/gi,'$1'+this.baseUrl+'/$2').replace(/\/+/g,'/');
+              html = html.replace(/(src=")(?!https?:\/\/)([^"]*)/gi,'$1'+this.baseUrl+'/$2').replace(/\/+/g,'/');
+              html = html.replace(/http:\/[^\/]/gi,"http://");
             }
-            this.el.nativeElement.innerHTML = marked(this.prepare(this.md));
+            this.el.nativeElement.innerHTML = html;
              Prism.highlightAll(false);
         })
         .catch(this.handleError);
