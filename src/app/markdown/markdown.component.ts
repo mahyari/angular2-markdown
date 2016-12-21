@@ -62,7 +62,6 @@ export class MarkdownComponent implements OnInit, AfterViewInit {
         .then(resp => {
             this.md = this.ext !== 'md' ?  '```' + this.ext + '\n' + resp.text() + '\n```' : resp.text();
             let html =  marked(this.prepare(this.md));
-            console.log(html);
             if(this.baseUrl.length > 0){
               html = html.replace(/(href="|src=")(?!https?:\/\/)([^"]*)/gi,'$1'+this.baseUrl+'/$2').replace(/\/+/g,'/');
               html = html.replace(/(http:\/)(\w{1})/gi,'$1'+'/'+'$2');
