@@ -3,6 +3,8 @@ import {Http} from '@angular/http';
 import * as  marked  from 'marked';
 import {MarkdownService} from './markdown.service';
 
+import * as Prism from 'prismjs';
+
 import 'prismjs/prism';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-java';
