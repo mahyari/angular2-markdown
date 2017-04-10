@@ -6,13 +6,13 @@ import {MarkdownService} from './markdown.service';
 import * as Prism from 'prismjs';
 
 import 'prismjs/prism';
-import 'prismjs/components/prism-c';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-cpp';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-perl';
-import 'prismjs/components/prism-php';
-import 'prismjs/components/prism-scss';
+// import 'prismjs/components/prism-c';
+// import 'prismjs/components/prism-java';
+// import 'prismjs/components/prism-cpp';
+// import 'prismjs/components/prism-python';
+// import 'prismjs/components/prism-perl';
+// import 'prismjs/components/prism-php';
+// import 'prismjs/components/prism-scss';
 import { environment } from '../../environments/environment';
 
 
