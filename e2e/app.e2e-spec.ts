@@ -1,7 +1,7 @@
 import { Angular2MarkdownPage } from './app.po';
 
-describe('angular2-markdown App', function() {
-  let page: Angular2MarkdownPage;
+describe('angular2-markdown App', () => {
+	let page: Angular2MarkdownPage;
 
   beforeEach(() => {
     page = new Angular2MarkdownPage();

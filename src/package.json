@@ -1,0 +1,13 @@
+{
+  "name": "angular2-markdown",
+  "version": "1.5.1",
+  "dependencies": {
+    "marked": "^0.3.6",
+    "prismjs": "^1.6.0"
+  },
+  "peerDependencies": {
+    "rxjs": "*",
+    "@angular/core": "*",
+    "@angular/http": "*"
+  }
+}

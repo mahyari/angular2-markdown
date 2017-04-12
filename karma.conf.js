@@ -2,37 +2,57 @@
 // https://karma-runner.github.io/0.13/config/configuration-file.html
 
 module.exports = function (config) {
-  config.set({
+  const configuration = {
     basePath: '',
-    frameworks: ['jasmine', 'angular-cli'],
+    frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-remap-istanbul'),
-      require('angular-cli/plugins/karma')
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage-istanbul-reporter'),
+      require('@angular/cli/plugins/karma')
     ],
+    client:{
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
     files: [
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
-      './src/test.ts': ['angular-cli']
+      './src/test.ts': ['@angular/cli']
     },
-    remapIstanbulReporter: {
-      reports: {
-        html: 'coverage',
-        lcovonly: './coverage/coverage.lcov'
-      }
+    mime: {
+      'text/x-typescript': ['ts','tsx']
+    },
+    coverageIstanbulReporter: {
+      reports: [ 'html', 'lcovonly' ],
+      fixWebpackSourcePaths: true
     },
     angularCli: {
-      config: './angular-cli.json',
+      config: './.angular-cli.json',
       environment: 'dev'
     },
-    reporters: ['progress', 'karma-remap-istanbul'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
-  });
+    reporters: config.angularCli && config.angularCli.codeCoverage
+     ? ['dots']
+     : ['dots'],
+     port: 9876,
+     colors: true,
+     logLevel: config.LOG_INFO,
+     autoWatch: true,
+     browsers: ['Chrome'],
+     singleRun: false,
+     customLaunchers: {
+       Chrome_travis_ci: {
+         base: 'Chrome',
+         flags: ['--no-sandbox']
+       }
+     },
+     mime: { 'text/x-typescript': ['ts','tsx'] },
+     client: { captureConsole: true }
+   };
+
+   if (process.env.TRAVIS) {
+     configuration.browsers = ['Chrome_travis_ci'];
+   }
+  config.set(configuration);
 };
